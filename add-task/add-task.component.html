@@ -1,0 +1,58 @@
+
+<div class="container-fluid">
+  <h2>AddTask Form</h2>
+  
+  <form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label>Task:</label>
+      <input [class.is-invalid]="addTaskForm.get('task').invalid &&  
+         addTaskForm.get('task').touched" formControlName="task" type="text" class="form-control" >
+        <small [class.d-none]="addTaskForm.get('task').valid ||  
+                              addTaskForm.get('task').untouched"
+                               class="text-danger">task name is required
+        </small>
+    </div>
+
+    <div class="form-group">
+      <label>Priority:</label>
+      <input   [class.is-invalid]="addTaskForm.get('priority').invalid &&  
+      addTaskForm.get('priority').touched" formControlName="priority" type="range"  min=0 max=30 class="form-control"   >
+      <small [class.d-none]="addTaskForm.get('priority').valid ||  
+      addTaskForm.get('priority').untouched"
+       class="text-danger">select range btw 0 and 30
+</small>
+    </div>
+   
+    <div class="form-group">
+      <label>Parent Task:</label>
+      <input formControlName="parentTask" type="text" class="form-control"  >
+     
+    </div>
+   
+    <div class="form-group">
+      <label>Start Date:</label>
+      <input  [class.is-invalid]="addTaskForm.get('startDate').invalid &&  
+      addTaskForm.get('startDate').touched" formControlName="startDate" type="date" class="form-control"  >
+      <small [class.d-none]="addTaskForm.get('startDate').valid ||  
+      addTaskForm.get('startDate').untouched"
+       class="text-danger">start date is required
+</small>
+    </div>
+    <div class="form-group">
+        <label>End Date:</label>
+        <input  [class.is-invalid]="addTaskForm.get('endDate').invalid &&  
+        addTaskForm.get('endDate').touched" formControlName="endDate" type="date" class="form-control" >
+        <small [class.d-none]="addTaskForm.get('endDate').valid ||  
+        addTaskForm.get('endDate').untouched"
+         class="text-danger">end date is required
+  </small>
+    
+      </div>
+      <div class="Container ">
+          <button  class="btn btn-primary" style='margin-right:16px' type =submit>Add Task</button>
+          <button class="btn btn primary" style='margin-right:16px' type="reset">Reset</button>
+      </div>
+  </form>
+  {{addTaskForm.value | json}}
+</div>

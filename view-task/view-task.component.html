@@ -1,0 +1,163 @@
+<div class="container-fluid">
+  <h2>View Task</h2>
+<div class="row">
+  <div  class="form-group col-sm-6" >
+    <label>Task:</label>
+    <input class="form-control" type="text" />
+  </div>
+  
+  <div  class="form-group  col-sm-6">
+    <label>Parent Task:</label>
+    <input  class="form-control" type="text" />
+  </div>
+</div>
+<div class="row" >
+  <div  class="form-group col-sm-3">
+    <label>Priority From:</label>
+    <input  class="form-control" type="number" />
+  </div>
+
+  <div  class="form-group col-sm-3">
+    <label>Priority To:</label>
+    <input  class="form-control" type="number" />
+  </div>
+  <div  class="form-group col-sm-3">
+    <label>Start Date:</label>
+    <input  class="form-control" type="date" />
+  </div>
+  <div  class="form-group col-sm-3">
+    <label>End Date:</label>
+    <input   class="form-control" type="date" />
+  </div>
+</div>
+
+</div>
+
+
+<table class="table table-striped" [mfData]="tasks" #mf="mfDataTable" [mfRowsOnPage]="5">
+  <thead>
+  <tr>
+      <th style="width: 20%">
+          <mfDefaultSorter by="task">Task</mfDefaultSorter>
+      </th>
+      <th style="width: 50%">
+          <mfDefaultSorter by="parent">Parent</mfDefaultSorter>
+      </th>
+      <th style="width: 10%">
+          <mfDefaultSorter by="priority">Priority</mfDefaultSorter>
+      </th>
+      <th style="width: 20%">
+          <mfDefaultSorter by="startDate">Start</mfDefaultSorter>
+      </th>
+      <th style="width: 20%">
+        <mfDefaultSorter by="endDate">End</mfDefaultSorter>
+    </th>
+    
+  </tr>
+  </thead>
+  <tbody>
+   
+  <tr *ngFor="let task of mf.data">
+    <td>{{task.task}}</td>
+      <td>{{task.parentTask}}</td>
+      <td>{{task.priority}}</td>
+      <td>{{task.startDate}}</td>
+      <td>{{task.endDate}}</td>
+    <div ng-app="">
+     <td><button type="button" class="btn btn-primary"  data-toggle="modal"  data-target="#myModal" (click)="updateTask(task)">Edit</button></td>
+     <td><button type="button" onclick="end()"  >EndTask</button></td>
+      </div>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+     
+  </tr>
+  </tfoot>
+</table>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+       
+<div class="container-fluid">
+  <h2>AddTask Form</h2>
+  
+  <form [formGroup]="addTaskForm" (ngSubmit)="onSubmit()">
+    <div [hidden]="true" class="form-group">
+      
+      <input  
+         formControlName="taskId" [(ngModel)]="example.taskId" type="text" class="form-control" >
+       
+    </div>
+    <div class="form-group">
+      <label>Task:</label>
+      <input [class.is-invalid]="addTaskForm.get('task').invalid &&  
+         addTaskForm.get('task').touched" [(ngModel)]="example.task" formControlName="task" type="text" class="form-control" >
+        <small [class.d-none]="addTaskForm.get('task').valid ||  
+                              addTaskForm.get('task').untouched"
+                               class="text-danger">task name is required
+        </small>
+    </div>
+
+    <div class="form-group">
+      <label>Priority:</label>
+      <input   [class.is-invalid]="addTaskForm.get('priority').invalid &&  
+      addTaskForm.get('priority').touched" formControlName="priority"[(ngModel)]="example.priority" type="range"  min=0 max=30 class="form-control"   >
+      <small [class.d-none]="addTaskForm.get('priority').valid ||  
+      addTaskForm.get('priority').untouched"
+       class="text-danger">select range btw 0 and 30
+</small>
+    </div>
+   
+    <div class="form-group">
+      <label>Parent Task:</label>
+      <input formControlName="parentTask" type="text" [(ngModel)]="example.parentTask" class="form-control"  >
+     
+    </div>
+   
+    <div class="form-group">
+      <label>Start Date:</label>
+      <input  [class.is-invalid]="addTaskForm.get('startDate').invalid &&  
+      addTaskForm.get('startDate').touched" formControlName="startDate" [(ngModel)]="example.startDate" type="date" class="form-control"  >
+      <small [class.d-none]="addTaskForm.get('startDate').valid ||  
+      addTaskForm.get('startDate').untouched"
+       class="text-danger">start date is required
+</small>
+    </div>
+    <div class="form-group">
+        <label>End Date:</label>
+        <input  [class.is-invalid]="addTaskForm.get('endDate').invalid &&  
+        addTaskForm.get('endDate').touched" formControlName="endDate" [(ngModel)]="example.endDate" type="date" class="form-control" >
+        <small [class.d-none]="addTaskForm.get('endDate').valid ||  
+        addTaskForm.get('endDate').untouched"
+         class="text-danger">end date is required
+  </small>
+    
+      </div>
+      <div class="Container ">
+          <button  class="btn btn-primary" style='margin-right:16px' type =submit>Add Task</button>
+          <button class="btn btn primary" style='margin-right:16px' type="reset">Reset</button>
+      </div>
+  </form>
+  {{addTaskForm.value | json}}
+</div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
